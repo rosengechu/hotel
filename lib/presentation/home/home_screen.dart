@@ -21,8 +21,27 @@ class MyHomePage extends StatelessWidget {
               'images/logo.png', // Replace with your image path
               fit: BoxFit.cover,
             ),
-            const SizedBox(height: 16), // Added some spacing
-            const Text('Hotel Booking Card'),
+            const SizedBox(height: 32), // Added more spacing
+            Text(
+              'Welcome to In-House Properties.',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.purple, // Purple color
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8), // Added some more spacing
+            Text(
+              'Your valued Hotel Booking Site',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.purple, // Purple color
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 32), // Added more spacing
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/signUp');

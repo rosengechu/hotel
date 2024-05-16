@@ -8,7 +8,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hotel/domain/models/user_model.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({Key? key}); // Corrected key parameter syntax
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: true);
@@ -28,24 +28,35 @@ class ProfileScreen extends StatelessWidget {
             children: [
               RichText(
                 text: TextSpan(
-                  text: 'Hi,  ',
+                  text: 'Hello  ',
                   style: const TextStyle(
-                    color: Colors.cyan,
+                    color: Color.fromARGB(255, 212, 0, 177),
                     fontSize: 27,
                     fontWeight: FontWeight.bold,
                   ),
                   children: <TextSpan>[
-                    TextSpan(
-                        text: user!.displayName,
+                    if (user != null && user.displayName != null) // Check if user and displayName is not null
+                      TextSpan(
+                        text: user.displayName!,
                         style: const TextStyle(
-                          color: Colors.cyan,
+                          color: Color.fromARGB(255, 212, 0, 177),
                           fontSize: 25,
                           fontWeight: FontWeight.w600,
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             print('My name is pressed');
-                          }),
+                          },
+                      )
+                    else
+                      TextSpan(
+                        text: 'Guest',
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 212, 0, 177),
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -53,7 +64,7 @@ class ProfileScreen extends StatelessWidget {
                 height: 5,
               ),
               TextWidget(
-                text: user.email,
+                text: user?.email ?? 'guest@example.com', // Default email if user is null
                 color: Colors.cyan,
                 textSize: 18,
                 // isTitle: true,
