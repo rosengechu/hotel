@@ -9,7 +9,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text('Hotel Management System'),
         centerTitle: true,
       ),
       body: Center(
@@ -17,37 +17,51 @@ class MyHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.asset(
-              'images/logo.png', // Replace with your image path
-              fit: BoxFit.cover,
+            Container(
+              width: 200, // Set your preferred width
+              height: 200, // Set your preferred height
+              child: Image.asset(
+                'images/hotel.jpg', // Replace with your image path
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(height: 32), // Added more spacing
             Text(
-              'Welcome to In-House Properties.',
+              'Book with Ease, Stay with Pleasure.',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.purple, // Purple color
+                color: Color.fromARGB(255, 14, 12, 12), // Purple color
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 8), // Added some more spacing
-            Text(
-              'Your valued Hotel Booking Site',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.purple, // Purple color
-              ),
-              textAlign: TextAlign.center,
-            ),
+
             const SizedBox(height: 32), // Added more spacing
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/signUp');
-              },
-              child: const Text('Sign up'),
-            ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/signUp');
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red), // Set background color to red
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0), // Set border radius for a more stylish look
+                    ),
+                  ),
+                ),
+                child: Container( // Wrap the text in a container for more styling options
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24), // Add padding for a better appearance
+                  child: const Text(
+                    'Sign up',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white, // Text color
+                    ),
+                  ),
+                ),
+              ),
+
           ],
         ),
       ),

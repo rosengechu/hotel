@@ -15,10 +15,10 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _firstNameController = TextEditingController(); // Added first name controller
-  final TextEditingController _lastNameController = TextEditingController(); // Added last name controller
-  final TextEditingController _usernameController = TextEditingController(); // Added username controller
-  bool _isPasswordVisible = false;  // State to manage password visibility
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  bool _isPasswordVisible = false;
 
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -26,9 +26,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _firstNameController.dispose(); // Dispose first name controller
-    _lastNameController.dispose(); // Dispose last name controller
-    _usernameController.dispose(); // Dispose username controller
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _usernameController.dispose();
     super.dispose();
   }
 
@@ -40,6 +40,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Future<void> _signUpWithGoogle() async {
     try {
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+        clientId: "981235786847-14ab8glnfa6e5vmnr4st6jem1vgsrtct.apps.googleusercontent.com"
+      );
       final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
       final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount!.authentication;
 
@@ -50,7 +53,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
 
-      // Additional logic to store user information in Firestore can be added here
       Navigator.pushReplacementNamed(context, '/profile');
     } catch (error) {
       print('Error signing in with Google: $error');
@@ -64,14 +66,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void _signUp() async {
     String email = _emailController.text.trim();
     String password = _passwordController.text.trim();
-    String firstName = _firstNameController.text.trim(); // Get first name value
-    String lastName = _lastNameController.text.trim(); // Get last name value
-    String username = _usernameController.text.trim(); // Get username value
+    String firstName = _firstNameController.text.trim();
+    String lastName = _lastNameController.text.trim();
+    String username = _usernameController.text.trim();
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      // Additional logic to store first name, last name, and username in database can be added here
-      Navigator.pushReplacementNamed(context, '/profile');  // Redirect to profile after sign up
+      
+      Navigator.pushReplacementNamed(context, '/profile');
     } catch (e) {
       print('Error signing up: $e');
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -82,10 +84,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Up'),
+        title: const Text('Hotels.com'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -100,22 +102,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
             const SizedBox(height: 16),
             TextFormField(
               controller: _usernameController,
-              decoration: const InputDecoration(labelText: 'Username'), // Add username field
+              decoration: const InputDecoration(labelText: 'Username'),
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _firstNameController,
-              decoration: const InputDecoration(labelText: 'First Name'), // Add first name field
+              decoration: const InputDecoration(labelText: 'First Name'),
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _lastNameController,
-              decoration: const InputDecoration(labelText: 'Last Name'), // Add last name field
+              decoration: const InputDecoration(labelText: 'Last Name'),
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _passwordController,
-              obscureText: !_isPasswordVisible,  // Correct placement of obscureText
+              obscureText: !_isPasswordVisible,
               decoration: InputDecoration(
                 labelText: 'Password',
                 suffixIcon: IconButton(
@@ -131,11 +133,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
               onPressed: _signUp,
               child: const Text('Sign Up'),
             ),
-            const SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: _signUpWithGoogle,
-              child: const Text('Sign Up with Google'),
-            ),
+           const SizedBox(height: 8),
+              TextButton.icon(
+                onPressed: _signUpWithGoogle,
+                icon: SizedBox( // Wrap the Image.asset with SizedBox to resize the image
+                  width: 24, // Set your preferred width
+                  height: 24, // Set your preferred height
+                  child: Image.asset('images/google.jpg'),
+                ),
+                label: const Text('Sign Up with Google'),
+                style: TextButton.styleFrom(
+                   // Change text color if needed
+                  backgroundColor: Colors.transparent, // Make the background transparent
+                ),
+              ),
+
+
             const SizedBox(height: 8),
             TextButton(
               onPressed: () => Navigator.pushReplacementNamed(context, '/login'),

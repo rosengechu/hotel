@@ -5,6 +5,7 @@ import 'package:hotel/domain/models/hotel_model.dart';
 class HotelRoomsScreen extends StatelessWidget {
   final Hotel hotel;
 
+  // ignore: non_constant_identifier_names
   const HotelRoomsScreen({super.key, required this.hotel, required Type Hotel});
 
   @override
